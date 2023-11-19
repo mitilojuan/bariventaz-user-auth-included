@@ -1,0 +1,41 @@
+{% for specificss2 in specifics2  %}
+
+<a href="{% url 'details' specificss2.id %}" ><img class="card-img-top" src="{{ specificss2.image.url }}" alt="Card image cap" style="width: 160px";></a><br><br>
+    {{ specificss2.name}}<br><br>
+    {{ specificss2.item}}<br><br>
+    {{ specificss2.price}}<br><br>
+<form>
+          <div class="aligned">
+
+        <button ><a href="https://wa.me/message/DEZBN5JWBPMFL1" style="text-decoration: none;">Contactar Administrador</a></button>
+        <img src='/media/logow.png'
+            width="40" >
+
+    </div>
+      </form>
+{% endfor  %}
+{% for searchh2 in search2 %}
+
+    <a href="{% url 'details' searchh2.id %}" ><img class="card-img-top" src="{{ searchh2.image.url }}" alt="Card image cap" style="width: 160px";></a><br><br>
+    {{ searchh2.name}}<br><br>
+    {{ searchh2.item}}<br><br>
+    {{ searchh2.price}}<br><br>
+
+{% endfor %}
+
+
+
+<a href="{% url 'products' %}" style="text-decoration: none;">Volver al inicio</a>
+
+
+<style>
+        .aligned {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            padding: 5px;
+            font-size: 15px;
+        }
+    </style>
