@@ -54,6 +54,10 @@
          <a class="nav-link" href="{% url 'stores' %}">Tiendas</a>
       </li>
 
+      <li class="nav-item">
+         <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
+      </li>
+
     </ul>
   </div>
 </nav>
@@ -81,7 +85,10 @@
 
 
 
+<a class="link" href="{% url 'logout' %}">Logout</a>
 
+ {% if user.is_authenticated %}
+            <p id="welcome-user">Welcome {{ request.user.username }}</p>
 
 
 {% for detaill in slides  %}
@@ -532,6 +539,9 @@
 <div>
 
 </body>
+
+
+{% endif  %}
 
   <footer
           class="text-center text-lg-start text-white"

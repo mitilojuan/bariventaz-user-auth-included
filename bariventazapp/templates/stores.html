@@ -83,7 +83,9 @@
 
 
 
-
+ {% if user.is_authenticated %}
+  <p id="welcome-user">Welcome {{ request.user.username }}</p>
+<a class="link" href="{% url 'logout' %}">Logout</a>  
 
 
 {% for store in stores %}
@@ -133,7 +135,7 @@
 
 {% endfor  %}
 
-
+{% endif  %}
 
  <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br>
  <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br> <br><br><br><br><br>

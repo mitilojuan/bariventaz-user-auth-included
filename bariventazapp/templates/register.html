@@ -1,0 +1,23 @@
+     {% load crispy_forms_tags %}
+    
+    <div class="register-content">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <fieldset class="register-form-group">
+                <legend>Register</legend>
+                <hr>
+                {{ form |crispy  }}
+            </fieldset>
+
+            <div class="form-submit">
+                <button class="btn btn-success" type="submit">Sign Up</button>
+            </div>
+
+            <hr>
+            
+            <div class="login-account">
+               
+            </div>
+        </form>
+    </div>
+

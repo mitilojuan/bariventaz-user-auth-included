@@ -2,11 +2,16 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
 from bariventazapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path("register/", views.register, name="register"),
+    path("login/", LoginView.as_view(template_name="login.html"),
+        name="login"),
+    path("logout/", LogoutView.as_view(template_name="logout.html"),
+        name="logout"),
     path('', views.products, name='products'),
     path('search_product', views.search_product, name='search'),
     path('search_product2/', views.search_product2, name='search2'),

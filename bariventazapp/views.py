@@ -1,5 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
+from .forms import UserRegistrationForm, TodoForm
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+
+def register(request):
+    """
+    User Registration form
+
+    Args:
+        request (POST): New user registered
+    """    
+    form = UserRegistrationForm()
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+    else:
+        form = UserRegistrationForm()
+
+    context = {"form": form}
+    return render(request, "register.html", context)
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")
+
 
 
 def products(request):
@@ -47,7 +74,7 @@ def products(request):
 
 
 
-
+@login_required
 def stores(request):
     storesauto = Stores.objects.all()
     productsautocomplete =  Electronics.objects.all()

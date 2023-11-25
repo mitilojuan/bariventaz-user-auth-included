@@ -1,0 +1,62 @@
+ {% load crispy_forms_tags %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 
+<link rel="stylesheet"
+        href=
+"https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <script src=
+"https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        crossorigin="anonymous">
+    </script>
+
+
+
+
+<!-- autocomplete cdn -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">
+    </script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet"
+        type="text/css" />
+
+
+
+
+<!-- not autocomplete cdn -->
+
+    <script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity=
+"sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+    </script>
+
+
+<div class="content-section">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend>Login</legend>
+            <hr>
+            {{ form |crispy }}
+        </fieldset>
+
+        <div class="form-submit">
+            <button class="login-submit-btn" type="submit">Login</button>
+        </div>
+
+        <hr>
+
+        <div id="create-account">
+            <medium class="text-muted">
+                Don't Have an Account?
+                <a href="{% url 'register' %}" class="register-link">Sign Up</a>
+            </medium>
+        </div>
+    </form>
+</div>
