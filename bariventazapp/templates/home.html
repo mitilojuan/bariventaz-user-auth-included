@@ -58,9 +58,18 @@
          <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
       </li>
 
+      <li class="nav-item">
+         <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+      </li>
+
+
     </ul>
   </div>
 </nav>
+
+
+
+
 <div class=" text-dark bg-light">
 <br><br>
 
@@ -83,12 +92,239 @@
 
 
 
+<section class="secCaro">
+            <div class="js-caroParent">
+                <div class="js-carousel css-carousel">
+                    <div class="js-track css-track">
+                        <div class="js-slide css-slide"><div>1</div></div>
+                        <div class="js-slide css-slide"><div>2</div></div>
+                        <div class="js-slide css-slide"><div>3</div></div>
+                        <div class="js-slide css-slide"><div>4</div></div>
+                        <div class="js-slide css-slide"><div>5</div></div>
+                        <div class="js-slide css-slide"><div>6</div></div>
+                        <div class="js-slide css-slide"><div>7</div></div>
+                        <div class="js-slide css-slide"><div>8</div></div>
+
+                    </div>
+                </div>
+                <div class="css-arrows">
+                    <a href="javascript:void(0);" class="js-arrow prev disable">Prev</a>
+                    <a href="javascript:void(0);" class="js-arrow next">Next</a>
+                </div>
+            </div>
+        </section>
+
+
+
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a,a:hover{
+  color: #000000;
+  text-decoration: none;
+}
+.secCaro{
+  padding: 0 20%;
+  position: relative;
+}
+.secCaro .css-carousel{
+  overflow: hidden;
+}
+.secCaro .css-carousel .css-track{
+  position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateX(0);
+    transition: all .35s ease;
+}
+.secCaro .css-carousel .css-track:after{
+  display: table;
+    content: '';
+    clear: both;
+}
+.secCaro .css-carousel .css-slide{
+  float: left;
+  padding: 0 7px;
+}
+.secCaro .css-carousel .css-slide.active-slide >div{
+  border-color: red;
+}
+.secCaro .css-carousel .css-slide > div{
+  background-color: #f2f2f2;
+  color: #000000;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 274px;
+  max-width: 100%;
+  border:1px solid transparent;
+}
+.secCaro .css-carousel .css-slide > div.big-wd{
+  width: 350px;
+}
+.secCaro .css-arrows{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 7px;
+}
+.secCaro .css-arrows .prev.disable{
+  opacity: .5;
+  cursor: default;
+  pointer-events: none;
+}
+.secCaro .css-arrows .next.disable{
+  opacity: .5;
+  cursor: default;
+  pointer-events: none;
+}
+
+</style>
+
+
+
+<script>
+
+class Carousel {
+  constructor() {
+    this.jscaroParent = document.getElementsByClassName('js-caroParent');
+    this.jscarousel = document.getElementsByClassName('js-carousel');
+    this.jstrack = document.getElementsByClassName('js-track');
+    this.jsslide = document.getElementsByClassName('js-slide');
+    this.jsarrow = document.getElementsByClassName('js-arrow');
+    this.pushwdarray = [];
+    this.assinchwidth = 0;
+  }
+
+  initSelectors() {
+  }
+
+  initEvents() {
+    for (let i = 0; i < this.jsarrow.length; i++) {
+      this.jsarrow[i].addEventListener('click', (e) => {
+        this.arrowAction(e);
+      });
+    }
+  }
+
+  initCarousel() {
+    const getParent = this.jscaroParent;
+    const getCarousel = this.jscarousel;
+    const getSlide = this.jsslide;
+    let getParentwd = 0;
+    for (var i = 0; i < getSlide.length; i++) {
+      getParentwd += getSlide[i].clientWidth;
+      this.pushwdarray.push(getSlide[i].clientWidth);
+      getSlide[0].classList.add('active-slide');
+    }
+    getSlide[0].parentElement.setAttribute('style', `width:${getParentwd}px;transform:translateX(0);`);
+  }
+
+  arrowAction(e) {
+    const tarparent = e.target.offsetParent.children[0].children[0].children;
+    if(e.target.classList.contains('next')){
+      const allchild = tarparent[0].children;
+      let i;
+      let getindex;
+      let getindexwd;
+      for(i = 0; i < allchild.length; i++){
+        if(allchild[i].classList.contains('active-slide')){
+          getindex = i;
+          if((i+2) === allchild.length){
+            e.target.classList.add('disable');
+          } else {
+            e.target.classList.remove('disable');
+          }
+          if(allchild[i].nextElementSibling === null){
+            getindexwd = 0;
+          } else {
+            getindexwd = allchild[i].clientWidth;
+            allchild[i].classList.add('prev-slide');
+            allchild[i].classList.remove('active-slide');
+          }
+          console.log(allchild);
+          // if(allchild[i].nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling === null){
+          //  getindexwd = 0;
+          // }
+        }
+      }
+      this.assinchwidth += getindexwd;
+      if(allchild[getindex].nextElementSibling){
+        allchild[getindex].nextElementSibling.classList.add('active-slide');
+      }
+      tarparent[0].style.transform = `translateX(-${this.assinchwidth}px)`;
+      e.target.previousElementSibling.classList.remove('disable');
+    } else if(e.target.classList.contains('prev')) {
+      const allchild = tarparent[0].children;
+      let i;
+      let getindex;
+      let getindexwd;
+      for(i = 0; i < allchild.length; i++){
+        if(allchild[i].classList.contains('active-slide')){
+          if(allchild[i].previousElementSibling.previousElementSibling === null){
+            e.target.classList.add('disable');
+          }
+          getindex = i;
+          getindexwd = allchild[i].previousElementSibling.clientWidth;
+          allchild[i].classList.remove('active-slide');
+        }
+      }
+      this.assinchwidth -= getindexwd;
+      allchild[getindex].previousElementSibling.classList.remove('prev-slide');
+      allchild[getindex].previousElementSibling.classList.add('active-slide');
+      tarparent[0].style.transform = `translateX(-${this.assinchwidth}px)`;
+      e.target.nextElementSibling.classList.remove('disable');
+    }
+  }
+
+  init() {
+    this.initSelectors();
+    this.initEvents();
+    this.initCarousel();
+  }
+}
+
+// export default Carousel;
+
+let Mycarousel = new Carousel();
+Mycarousel.init();
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ {% if user.is_authenticated %}
+            <p id="welcome-user">Welcome {{ request.user.username }}</p>
 
 
 <a class="link" href="{% url 'logout' %}">Logout</a>
 
- {% if user.is_authenticated %}
-            <p id="welcome-user">Welcome {{ request.user.username }}</p>
+
+
 
 
 {% for detaill in slides  %}
@@ -542,6 +778,500 @@
 
 
 {% endif  %}
+
+
+
+
+
+
+
+
+{% if not user.is_authenticated %}
+
+
+
+
+
+
+
+
+
+
+{% for detaill in slides  %}
+
+
+
+
+    <div class="container mb-4 p-4" style="text-align: center;">
+        <div id="carouselExampleSlidesOnly"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            data-bs-pause="false"
+            data-bs-keyboard="false">
+
+            <div class="carousel-inner">
+                <div class="carousel-item bg-light active"
+                    data-bs-interval="2000">
+
+                      <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image.url }}" height='500px' width='500px'></a>
+                </div>
+
+                <div class="carousel-item bg-light"
+                    data-bs-interval="4000">
+
+                   <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image2.url }}" height='500px' width='500px'></a>
+                </div>
+
+                <div class="carousel-item bg-light"
+                    data-bs-interval="6000">
+
+                    <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image3.url }}" height='500px' width='500px'></a>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+
+
+
+
+
+
+
+
+{% endfor  %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+<!-- display products 1 -->
+
+
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+
+             <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5  style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+
+<!-- display products 2 -->
+
+
+{% for electronic11 in electronics11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'details2' electronic11.id %}" ><img src="{{ electronic11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ electronic11.name  }}</h5>
+                       <h5 class="text-truncate">{{ electronic11.item  }}</h5>
+  <h5>{{ electronic11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'details2' electronic11.id %}" ><img src="{{ electronic11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ electronic11.name  }}</h5>
+                      <h5 class="text-truncate">{{ electronic11.item  }}</h5>
+  <h5>{{ electronic11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- display products 3 -->
+
+
+
+
+
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+
+             <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+
+
+
+
+
+
+
+{% for detaill in slides2  %}
+
+
+
+
+    <div class="container mb-4 p-4" style="text-align: center;">
+        <div id="carouselExampleSlidesOnly"
+            class="carousel slide"
+            data-bs-ride="carousel"
+            data-bs-pause="false"
+            data-bs-keyboard="false">
+
+            <div class="carousel-inner">
+                <div class="carousel-item bg-light active"
+                    data-bs-interval="2000">
+
+                      <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image.url }}" height='500px' width='500px'></a>
+                </div>
+
+                <div class="carousel-item bg-light"
+                    data-bs-interval="4000">
+
+                   <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image2.url }}" height='500px' width='500px'></a>
+                </div>
+
+                <div class="carousel-item bg-light"
+                    data-bs-interval="6000">
+
+                    <a href="{% url 'details2' detaill.id %}" ><img src="{{ detaill.image3.url }}" height='500px' width='500px'></a>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+
+
+
+
+
+
+
+
+{% endfor  %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- display products 4 -->
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+<!-- display products 5 -->
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+
+      <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+
+<!-- display products 6 -->
+
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+
+
+<!-- display products 7 -->
+
+
+{% for product11 in products11 %}
+
+    <div class="container overflow-hidden">
+        <div class="row gx-1 justify-content-evenly">
+
+
+                 <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3 justify-content-evenly">
+
+                <div class="p-1 card text-center">
+                      <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"  style="width: 110px; height: 100px;"></a>
+                      <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                       <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+            </div>
+
+
+            <div class="col-3">
+
+                <div class="p-1 card text-center">
+                     <a href="{% url 'specifics' product11.id %}" ><img src="{{ product11.image.url }}"   style="width: 110px; height: 100px;"></a>
+                     <h5 style='font-weight: bold;'>{{ product11.name  }}</h5>
+                      <h5 class="text-truncate">{{ product11.item  }}</h5>
+  <h5>{{ product11.price  }}</h5>
+                </div>
+        </div>
+</div>
+    </div><br><br><br>
+
+
+
+{% endfor  %}
+
+<div>
+
+</body>
+
+
+
+{% endif  %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <footer
           class="text-center text-lg-start text-white"

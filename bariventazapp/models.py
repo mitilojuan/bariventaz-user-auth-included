@@ -52,5 +52,7 @@ class Vefase(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default='')
 
 
+
+
     def __str__(self):
         return self.item
