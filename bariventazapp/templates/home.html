@@ -92,6 +92,273 @@
 
 
 
+<style>
+
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 15%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: blue;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 0;
+  
+  border-radius: 3px 0 0 3px;
+}
+
+
+
+
+
+.card{
+  margin-right:20px;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div class="slideshow-container d-flex justify-content-around">
+
+<div class="mySlides">
+
+
+  <div class="d-flex justify-content-around">
+
+    {% for product11 in products11 %}
+
+ <div class="card">
+  <a href="{% url 'details2' product11.id %}" ><img src="{{ product11.image.url }}" height='250px' width='250px'></a>
+  </div>
+
+{% endfor %}
+
+   <div class="card ">
+  <img src="origin.jpg" height="300px" width="300px">
+</div>
+
+
+   <div class="card">
+  <img src="Tesla_Model_S_(28898945604).jpg" height="300px" width="300px">
+  </div>
+
+<div class="card">
+  <img src="2022_tesla_model_s_angularfront.jpg" height="300px" width="300px">
+  </div>
+  
+  
+ 
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="mySlides">
+
+
+  <div class="d-flex justify-content-around">
+
+ <div class="card">
+  <img src="origin.jpg   " height="300px" width="300px">
+  </div>
+
+
+
+   <div class="card ">
+  <img src="            2022_tesla_model_s_angularfront.jpg" height="300px" width="300px">
+</div>
+
+
+   <div class="card">
+  <img src="Tesla_Model_S_(28898945604).jpg" height="300px" width="300px">
+  </div>
+
+<div class="card">
+  <img src="2022_tesla_model_s_angularfront.jpg" height="300px" width="300px">
+  </div>
+  
+  
+ 
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="mySlides">
+
+
+  <div class="d-flex justify-content-around">
+
+ <div class="card">
+  <img src="2022_tesla_model_s_angularfront.jpg" height="300px" width="300px">
+  </div>
+
+
+
+   <div class="card ">
+  <img src="origin.jpg" height="300px" width="300px">
+</div>
+
+
+   <div class="card">
+  <img src="2022_tesla_model_s_angularfront.jpg     " height="300px" width="300px">
+  </div>
+
+<div class="card">
+  <img src="         Tesla_Model_S_(28898945604).jpg" height="300px" width="300px">
+  </div>
+  
+  
+ 
+
+
+</div>
+
+
+</div>
+
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+<a class="prev btn btn-primary me-md-2" onclick="plusSlides(-1)">❮</a>
+<a class="next btn btn-primary" onclick="plusSlides(1)">❯</a>
+</div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <section class="secCaro">
             <div class="js-caroParent">
                 <div class="js-carousel css-carousel">
@@ -304,7 +571,7 @@ Mycarousel.init();
 </script>
 
 
-
+-->
 
 
 
